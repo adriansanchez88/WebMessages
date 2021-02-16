@@ -1,0 +1,73 @@
+<!-- Página donde se muestra una listado de perfiles que va a heredar de base.html -->
+{% extends 'core/base.html' %}
+<!-- Se cargan los ficheros static -->
+{% load static %}
+<!-- Se define el nombre del titulo que se va a mostrar en el head de la página -->
+{% block title %}Páginas{% endblock %}
+<!-- Contenido variable de la página -->
+{% block content %}
+  <!-- Se define el estilo css que va a tener el avatar de los perfiles y los datos -->
+  <style>.perfil-avatar{float:left;width:4rem;height:4rem}.perfil-datos{padding-left:4.5rem;padding-top:.4rem;}</style>
+  <main role="main">
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-md-9 mx-auto mb-5">
+          <h2>Perfiles</h2>
+          <div class="row">
+            <!-- Ciclo donde se muestra cada perfil -->
+            {% for perfil in perfil_list %}
+              <div class="col-md-4 mt-2 mb-3">
+                <div class="row p-1">
+                  <div class="col-md-12">
+                    <!-- Si el perfil no tiene avatar se muestra una imagen predefinida (no-avatar.jpg) -->
+                    {% if perfil.avatar %}
+                      <img src="{{perfil.avatar.url}}" class="img-fluid perfil-avatar">
+                    {% else %}
+                      <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid perfil-avatar">
+                    {% endif %}
+                    <p class="perfil-datos">
+                      <!-- Usuario relacionado al perfil -->
+                      <b>{{perfil.user|truncatechars:"16"}}</b><br>
+                      <!-- Enlace para ver mas detalles del perfil -->
+                      <a href="{% url 'perfiles:detail' perfil.user %}">Ver perfil</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <!-- Menú de paginación -->
+          {% if is_paginated %}
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                  </li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                  <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                  </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

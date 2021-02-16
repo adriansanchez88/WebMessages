@@ -1,0 +1,48 @@
+<!-- Página de formulario de modificación de perfil que va a heredar de base.html -->
+{% extends 'core/base.html' %}
+<!-- Se cargan los ficheros static -->
+{% load static %}
+<!-- Se define el nombre del titulo que se va a mostrar en el head de la página -->
+{% block title %}Modificación de perfil{% endblock %}
+<!-- Contenido variable de la página -->
+{% block content %}
+  <!-- Se define el estilo css que va a tener el texto del mensaje en caso de error (en este caso: color rojo) -->
+  <style>.errorlist{color:red;} label{display:none}</style>
+  <main role="main">
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-md-9 mx-auto mb-5">
+          <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <div class="row">
+              <!-- Avatar -->
+              <div class="col-md-2">
+                <!-- Si el perfil no tiene avatar se muestra una imagen predefinida (no-avatar.jpg) -->
+                {% if request.user.perfil.avatar %}
+                  <img src="{{request.user.perfil.avatar.url}}" class="img-fluid">
+                  <p class="mt-1">¿Borrar? <input type="checkbox" id="avatar-clear" name="avatar-clear" /></p>
+                {% else %}
+                  <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid">
+                {% endif %}
+              </div>
+              <!-- Campos del perfil -->
+              <div class="col-md-10">
+                <h3>{{request.user}}</h3>
+                <input type="file" name="avatar" class="form-control-file mt-3" id="id_avatar">
+                {{ form.bio }}
+                {{ form.link }}
+                <input type="email" class="form-control mt-3" value="{{request.user.email}}" readonly>
+                <!-- Enlace para cambiar el email y la contraseña en formularios separados -->
+                <p class='mt-3'>
+                  Si desea editar su email haga clic <a href="{% url 'mi_perfil_update_email' %}">aquí</a>.<br>
+                  Y si desea cambiar su contraseña haga clic <a href="{% url 'password_change' %}">aquí</a>.
+                </p>
+                <!-- Botón para guardar los cambios -->
+                <input type="submit" class="btn btn-primary btn-block mt-3" value="Actualizar">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

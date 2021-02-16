@@ -1,0 +1,44 @@
+<!-- Página de detalle de un pefil (público) especificado que va a heredar de base.html -->
+{% extends 'core/base.html' %}
+<!-- Se cargan los ficheros static -->
+{% load static %}
+<!-- Se define el nombre del titulo que se va a mostrar en el head de la página -->
+{% block title %}{{perfil.user}}{% endblock %}
+<!-- Contenido variable de la página -->
+{% block content %}
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+        <h2>Detalles de:</h2>
+        <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+          <div class="row">
+            <!-- Avatar -->
+            <div class="col-md-2">
+              <!-- Si el perfil no tiene avatar se muestra una imagen predefinida (no-avatar.jpg) -->
+              {% if perfil.avatar %}
+                <img src="{{perfil.avatar.url}}" class="img-fluid">
+              {% else %}
+                <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid">
+              {% endif %}              
+            </div>
+            <!-- Campos del perfil -->
+            <div class="col-md-10">
+              <h3>{{perfil.user}}</h3>
+              {% if perfil.bio %}<p>{{perfil.bio}}</p>{% endif %}
+              {% if perfil.link %}<p><a href="{{perfil.link}}" target="_blank">{{perfil.link}}</a></p>{% endif %}
+              {% if request.user.is_authenticated %}
+                {% if request.user != perfil.user %}
+                  <a href="{% url 'messenger:start' perfil.user.username %}" class="btn btn-primary btn-block mt-3">
+                    Enviar mensaje
+                  </a>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

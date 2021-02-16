@@ -1,0 +1,25 @@
+<!-- Página de formulario de modificación de email que va a heredar de base.html -->
+{% extends 'core/base.html' %}
+<!-- Se cargan los ficheros static -->
+{% load static %}
+<!-- Se define el nombre del titulo que se va a mostrar en el head de la página -->
+{% block title %}Modificación de email{% endblock %}
+<!-- Contenido variable de la página -->
+{% block content %}
+  <!-- Se define el estilo css que va a tener el texto del mensaje en caso de erro (en este caso: color rojo) -->
+  <style>.errorlist{color:red;} label{display:none}</style>
+  <main role="main">
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-md-9 mx-auto mb-5">
+          <form action="" method="post">{% csrf_token %}
+            <h3 class="mb-4">Email</h3>
+              <!-- Se muestra el formulario en forma de párrafo -->
+              {{form.as_p}}
+            <p><input type="submit" class="btn btn-primary btn-block" value="Actualizar"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

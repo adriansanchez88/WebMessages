@@ -1,0 +1,47 @@
+<!-- Template obligatorio para el uso de autenticación de usuario -->
+<!-- Página de autenticación de usuario que va a heredar de base.html -->
+{% extends 'core/base.html' %}
+<!-- Se cargan los ficheros static -->
+{% load static %}
+<!-- Se define el nombre del titulo que se va a mostrar en el head de la página -->
+{% block title %}Iniciar sesión{% endblock %}
+<!-- Contenido variable de la página -->
+{% block content %}
+  <!-- Se define el estilo css que va a tener el texto del mensaje en caso de erro (en este caso: color rojo) -->
+  <style>.errorlist{color:red;}</style>
+  <main role="main">
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-md-9 mx-auto mb-5">
+          <!-- Si recibe en el GET un mensaje de 'registrado' significa que se registró satisfactoriamente y se muestra un mensaje -->
+          {% if 'registrado' in request.GET %}
+            <p style="color:green;">Usuario registrado correctamente, ya puedes iniciar sesión</p>
+          {% endif %}
+          <form action="" method="post">{% csrf_token %}
+            <h3 class="mb-4">Iniciar sesión</h3>
+            <!-- Si se producen errores en el formulario se muestra un mensaje -->
+            {% if form.non_field_errors %}
+              <p style="color:red">Usuario o contraseña incorrectos, prueba de nuevo.</p>
+            {% endif %}
+            <!-- Campo para el nombre de usuario -->
+            <p>
+              <input type="text" name="username" autofocus maxlength="254" required
+                id="id_username" class="form-control" placeholder="Nombre de usuario"/>
+            </p>
+            <!-- Campo para la contraseña -->
+            <p>
+              <input type="password" name="password" required
+                id="id_password" class="form-control" placeholder="Contraseña"/>
+            </p>
+            <!-- Botón para acceder -->
+            <p><input type="submit" class="btn btn-primary btn-block" value="Acceder"></p>
+          </form>
+          <!-- Opción de recuperar contraseña a través de un email -->
+          <p>
+            ¿Ha olvidado su clave? Puede restaurarla dando clic <a href="{% url 'password_reset' %}">aquí</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

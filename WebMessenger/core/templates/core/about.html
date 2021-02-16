@@ -1,0 +1,28 @@
+
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block title %}Acerca de{% endblock %}
+
+{% block content %}    
+	<article class="about-section py-5">
+		    <div class="container">
+			    <h2 class="title mb-3">Acerca de WebMessages</h2>
+			    
+			    <p>Este sitio web fue pensado con el objetivo de promover la interacción social con los amigos.</p>
+			    <figure><img class="img-fluid" src="{% static 'core/images/envio_mensajes.png' %}" alt="image"></figure>
+			    <h5 class="mt-5">Detrás de WebMessages</h5>
+			    <p>Sitio web desarrollado en <b>Python</b> utilizando el framework <b>Django</b>.</p>
+				<figure><img class="img-fluid" src="{% static 'core/images/python-django.png' %}" alt="image"></figure>			    
+			    <h5 class="mt-5">Próximamente...</h5>
+			    <p>Póximamente se lanzará una línea de productos del sitio que serán anunciadas, esperamos sean de su agrado.</p>
+			    
+			    <figure><a href="https://made4dev.com"><img class="img-fluid" src="{% static 'core/images/merchandise_webmessages.png' %}" alt="image"></a></figure>
+		    </div>
+	    </article><!--//about-section--> 
+{% endblock %}
+    
+    
+	    	    
+	    
