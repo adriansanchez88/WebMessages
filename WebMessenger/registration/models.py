@@ -34,7 +34,7 @@ class Perfil(models.Model):
         verbose_name_plural = 'perfiles'
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 # Señal que se llamará automaticamente luego de crearse un usuario (post_save), donde se creará un perfil asociado 
 # a este aunque no acceda al sitio web luego de registrarse
