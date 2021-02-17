@@ -30,6 +30,11 @@ class Perfil(models.Model):
         # El orden por defecto en que se mostrarán los perfiles, en este caso por el username del user
         # Como se usa un campo de otro modelo se llama con user__username (campoQueRepresentaAlModelo__campoDelModeloRepresentado)
         ordering = ['user__username']
+        verbose_name = 'perfil'
+        verbose_name_plural = 'perfiles'
+
+    def __str__(self):
+        return self.user
 
 # Señal que se llamará automaticamente luego de crearse un usuario (post_save), donde se creará un perfil asociado 
 # a este aunque no acceda al sitio web luego de registrarse
